@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+# start the spark and friends services
+docker-compose up -d
+sleep 4   # wait a few seconds for the logs to refresh
+
+# open the browser on the jypterlab notebook. 
+url=`docker logs spark_local_env_spark_1 2>&1 |  grep "http://127.0.0.1:8888/?token="  | tail -1 | cut -c 9- `
+
+open $url
+

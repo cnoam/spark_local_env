@@ -14,7 +14,7 @@ services:
       - zk_vol_data:/var/lib/zookeeper/data
       - zk_vol_log:/var/lib/zookeeper/log
 
-
+  # if you change this name, MUST also change in the environ, and remove the ZK volume since it hold an old kafka server ID  for the old name.
   kafka:
     # "`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-'"`-._,-
     # An important note about accessing Kafka from clients on other machines: 
@@ -38,36 +38,39 @@ services:
       - zookeeper
     ports:
       - 9092:9092
+    
+ 
     restart: always
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_LOG_RETENTION_BYTES: 20000000000
+      KAFKA_LOG_RETENTION_BYTES: 200000000
       KAFKA_LOG_RETENTION_HOURS: 123456
     volumes:
-      #- ./host/folder:/container/folder
       - kafka_vol:/var/lib/kafka/data/
 
   spark:
+     # tag ad3574d3c5c7      spark 2.4.4
+     # you can use 'latest' for the current spark version
      image: jupyter/pyspark-notebook:ad3574d3c5c7
      environment:
        JUPYTER_ENABLE_LAB : "yes"
-     #       config: "spark.jars.packages=org.apache.spark:spark-sql-kafka-0-10_2.12:2.4.8"      
+   
      ports:
        - 8888:8888
-       - 4040:4040
+       - 4040:4040   # the diagnostics web UI is created after succesful creation of SparkSession.
      volumes: 
-       - spark_vol_work:/home/jovyan/work
+       - $PWD/work:/home/jovyan/work
 
 volumes:
   zk_vol_data:
   zk_vol_log:
   kafka_vol:
-  spark_vol_work:
+
 
 
 
