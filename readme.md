@@ -1,35 +1,45 @@
 Use the instructions here to run your own local (on your Window/Mac/Linux) machine.
 
 ## Installing 
-1. install Docker Desktop. <Br>
-   *Windows*: install WSL as detailed in the instructions on the web
-   
-1.1 install docker-compose: `sudo apt install docker-compose` or https://docs.docker.com/compose/install/compose-desktop/ <br>
-    *Windows*: compose is already part of Docker Desktop
-   
-2. run the command: `./run`   that internally runs `docker-compose up -d`
+**Windows**:<br>
+   install Docker Desktop. <Br>
+   install WSL2 as detailed in the instructions on the web<br>
+   *note*: compose is already part of Docker Desktop
 
-3. import some data into the kafka server now running in your machine. <br>
+**linux/mac**: <br>
+  install docker + docker-compose: `sudo apt install -y docker docker-compose`
+<hr>    
+
+Open a shell (in Windows, search "ubuntu")
+
+Install this repo: `git clone https://github.com/cnoam/spark_local_env.git` <br>
+`cd spark_local_env`
+
+Run the command: `./run`   that internally runs `docker-compose up -d` and start a browser on the jupyter notebook
+
+Import some data into the kafka server now running in your machine. <br>
 ```
+   sudo apt update
+   sudo apt upgrade -y
+   sudo apt install kafkacat unzip -y
    unzip static_data.zip
-   sudo apt install kafkacat
    kafkacat -b localhost:9092 -t activities -P  -l Static\ data/data.json
-   # rm data.json data.zip # TODO: verify the data persists after killing the container
 ```   
-   
+You now have the data loaded into kafka's storage.
+It will be available even after you turn off the service.
+ 
 
 
 ## Running
-if the spark server started succesfully in the previous stage, you can now connect using http://localhost:8888 and open jupyter notebook.
 
-The token is printed in the log output of the spark. 
+The script `run` started the service, and opened the browser for you, ready to play in Jupyternotebook.
 
-open  http://localhost:4040 to see details on stages, environment etc.
+If you did not use `run`, you can find the token  printed in the log output of spark.  (you need it to enter the notebook)
 
- or just run the script `run` that will start the service, and then open the browser for you.
+Open  http://localhost:4040 to see details on stages, environment etc.
 
 ## Stopping
-run `docker-compose down`.
+run `docker-compose down` or use the Docker Desktop
 
 All your data is still saved and can be used the next run
 
@@ -37,7 +47,7 @@ All your data is still saved and can be used the next run
 ### linux/mac
 ```
   $ docker-compose down
-  $ docker kill `docker ps`
+  $ docker kill `docker ps -aq`
   $ docker rm `docker ps -aq`
   $ docker rmi `docker images`
 ```
@@ -45,5 +55,5 @@ Now you can uninstall docker itself:
 `sudo apt remove docker`
   
 ### Windows
-TBD
+Same as above + uninstall Docker Desktop
  
