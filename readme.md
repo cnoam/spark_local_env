@@ -36,7 +36,7 @@ The script `run` started the service, and opened the browser for you, ready to p
 
 If you did not use `run`, you can find the token  printed in the log output of spark.  (you need it to enter the notebook)
 
-Open  http://localhost:4040 to see details on stages, environment etc.
+*After* the spark session is created, open  http://localhost:4040 to see details on stages, environment etc. This link is exposed by the session and does not exist before the spark session is ready.
 
 ## Stopping
 run `docker-compose down` or use the Docker Desktop
