@@ -1,5 +1,7 @@
 Use the instructions here to run your own environment of Spark + Kafka on you local (Window/Mac/Linux) machine.
 
+This installation uses Spark version 2.4.4
+
 Instead of complicated installs, you will use a ready-made package called *docker container*.
 All you have to do is install the program that will run the *containers*, and a few supporting tools.
 
@@ -14,7 +16,7 @@ The plan:
 5. Run you code, debug, run... until happy.
 6. convert (by copy/paste) the notebook into a python file, and submit to the cluster
 
-## Installing 
+# Installing 
 **Windows**:<br>
    install Docker Desktop. <Br>
    install WSL2 as detailed in the instructions on the web<br>
@@ -45,7 +47,7 @@ It will be available even after you turn off the service.
  
 
 
-## Running
+# Running
 
 The script `run` started the service, and opened the browser for you, ready to play in Jupyternotebook.
 
@@ -53,13 +55,27 @@ If you did not use `run`, you can find the token  printed in the log output of s
 
 *After* the spark session is created, open  http://localhost:4040 to see details on stages, environment etc. This link is exposed by the session and does not exist before the spark session is ready.
 
-## Stopping
+load the sample code from the *work* folder and run it. It should succeed and show
+```
+546083 records in frame
++-------------+-------------------+--------+-----+------+----+-----+-------------+-------------+-------------+
+| Arrival_Time|      Creation_Time|  Device|Index| Model|User|   gt|            x|            y|            z|
++-------------+-------------------+--------+-----+------+----+-----+-------------+-------------+-------------+
+|1424686735175|1424686733176178965|nexus4_1|   35|nexus4|   g|stand| 0.0014038086|    5.0354E-4|-0.0124053955|
+|1424686735378|1424686733382813486|nexus4_1|   76|nexus4|   g|stand|-0.0039367676|  0.026138306|  -0.01133728|
+...
+```
+
+If the code runs but the output table is empty, you forgot to load data into kafka.
+
+
+# Stopping
 run `docker-compose down` or use the Docker Desktop
 
 All your data is still saved and can be used the next run
 
-## Uninstalling
-### linux/mac
+# Uninstalling
+## linux/mac
 ```
   $ docker-compose down
   $ docker kill `docker ps -aq`
@@ -69,6 +85,18 @@ All your data is still saved and can be used the next run
 Now you can uninstall docker itself:
 `sudo apt remove docker`
   
-### Windows
+## Windows
 Same as above + uninstall Docker Desktop
+
+
+# Troubleshooting
+
+* If you see an error similar to "ERROR: for spark_local_env_kafka_1  Cannot start service kafka: driver failed programming external connectivity on endpoint spark_local_env_kafka_1", restart the computer. This is a bug in docker that keeps older processes hanging
  
+* (unverified report from Mac OS): <br>
+Replace in file 'run': <br>
+`spark_local_env_spark_1` with `spark_local_env-spark-1`
+
+* The linux installation was tested on Ubuntu 22.04 . On Fedora, see https://rmoff.net/2020/04/20/how-to-install-kafkacat-on-fedora/  (Read to the end)
+
+
