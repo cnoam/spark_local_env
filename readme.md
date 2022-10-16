@@ -1,6 +1,6 @@
 Use the instructions here to run your own environment of Spark + Kafka on you local (Window/Mac/Linux) machine.
 
-This installation uses Spark version 2.4.4
+This installation uses Spark version 3.3
 
 Instead of complicated installs, you will use a ready-made package called *docker container*.
 All you have to do is install the program that will run the *containers*, and a few supporting tools.
@@ -14,7 +14,7 @@ The plan:
 3. [only once] upload data into the kafka server.
 4. use Jupyter notebook (opened automagically by the `run`)
 5. Run you code, debug, run... until happy.
-6. convert (by copy/paste) the notebook into a python file, and submit to the cluster
+
 
 # Installing 
 **Windows**:<br>
@@ -33,7 +33,12 @@ Install this repo:<br>
 
 Run the command: `./run` that internally runs `docker-compose up -d` and start a browser with the jupyter notebook
 
+# Importing data to Kafka (DISABLED)
 Import some data into the kafka server now running in your machine. <br>
+
+* The following commands assumes there is a file static_data.zip in the current folder, containing file 'Static data/data.json' that contains json lines.*
+
+
 In a linux console: <br>
 ```
    sudo apt update
