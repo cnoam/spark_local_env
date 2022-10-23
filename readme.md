@@ -9,7 +9,7 @@ The program to run the container is called **Docker**. It is possible to use it 
 Even if using the DockerDesktop, you still have to do some operations from the command line.
 
 The plan:
-1. install Docker (in Windows, also install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) and [ubuntu subsystem] (https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV) )
+1. install Docker (in Windows, also install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) and [ubuntu subsystem](https://apps.microsoft.com/store/detail/ubuntu/9PDXGNCFSCZV) )
 2. get Spark (will be done automatically when calling `run`)
 3. use Jupyter notebook (by opening the browser on the link displayed by `run`)
 
@@ -31,7 +31,7 @@ After installation, verify it works by opening a terminal
 (in Windows, it must be the ubuntu console that you have once installing WSL2),<br>
 and type:
 
-    `docker run hello-world`
+    docker run hello-world
 
 Open a terminal (in Windows, search "ubuntu")
 
