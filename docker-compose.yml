@@ -16,5 +16,6 @@ services:
        - 4040:4040   # the diagnostics web UI is created after succesful creation of SparkSession.
      volumes: 
        - $PWD/work:/home/jovyan/work
+       - $PWD/data:/home/jovyan/data
 
 
